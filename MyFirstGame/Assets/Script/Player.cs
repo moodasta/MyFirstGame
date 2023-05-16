@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+    private Transform playerTransform;
+    private Rigidbody2D rigidbody;
+    private bool isOnFloor;
+
+    [Header ("Player movement")]
+    [SerializeField] private float velocity = 10;
+    [SerializeField] private float jumpForce = 10;
+
+    private void Awake()
+    {
+        playerTransform = GetComponent<Transform>();
+        rigidbody = GetComponent<Rigidbody2D>();
+    }
+    
+
+    // Update is called once per frame
+    void Update()
+    {
+        MovePlayer();
+    }
+
+    void MovePlayer()
+    {
+        float moveX = Input.GetAxisRaw("Horizontal") * velocity * Time.deltaTime;
+        playerTransform.Translate(new Vector3(moveX, 0));
+
+        if (Input.GetButtonDown("Jump") && isOnFloor)
+        {
+            isOnFloor = false;
+            rigidbody.AddForce(Vector2.up * jumpForce);
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        isOnFloor = true;
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            StartCoroutine(DestroyPlayer());
+        }
+    }
+    IEnumerator DestroyPlayer()
+    {
+        Color c = GetComponent<Renderer>().material.color;
+        for (float alpha = if; GradientAlphaKey >= 0; GradientAlphaKey -= 0.1f)
+            {
+            c.a = GradientAlphaKey;
+            GetComponent<Renderer>().material.color = c;
+            yield return new WaitForSeconds(.1f);
+        }
+        Destroy(gameObject);
+    }
+}
