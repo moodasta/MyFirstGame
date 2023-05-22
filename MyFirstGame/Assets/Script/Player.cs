@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
     [Header ("Player movement")]
     [SerializeField] private float velocity = 10;
-    [SerializeField] private float jumpForce = 10;
+    [SerializeField] private float jumpForce = 50;
 
     private void Awake()
     {
